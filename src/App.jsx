@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { App as AntdApp } from 'antd';
 import { AuthProvider } from './contexts/AuthContext.jsx';
 import PrivateRoute from './routes/PrivateRoute';
+import RoleBasedRedirect from './components/RoleBasedRedirect';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Magistrants from './pages/Magistrants';
@@ -17,7 +18,7 @@ function App() {
       <AuthProvider>
         <Router>
           <Routes>
-            <Route path="/" element={<Navigate to="/profile" replace />} />
+            <Route path="/" element={<RoleBasedRedirect />} />
             <Route path="/login" element={<Login />} />
             <Route
               path="/profile"

@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { Form, Input, Button, Card, message, Select, Spin } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useAuth, useAuthActions } from '../../hooks/useAuth.js';
+import RoleBasedRedirect from '../../components/RoleBasedRedirect';
 import './Login.css';
 
 const { Option } = Select;
@@ -59,7 +60,7 @@ const Login = () => {
   };
 
   if (isAuthenticated) {
-    return <Navigate to="/profile" replace />;
+    return <RoleBasedRedirect />;
   }
 
   const onChange = value => {
