@@ -1,0 +1,182 @@
+/* Стили для календаря */
+.calendar-cell {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.deadline-cell {
+  background-color: #ff4d4f !important;
+  color: white !important;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(255, 77, 79, 0.3);
+}
+
+.event-cell {
+  transition: all 0.3s ease;
+}
+
+.event-cell:hover {
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Стили для отключенных дат (синие выделенные) */
+.ant-picker-calendar-date.ant-picker-calendar-date-disabled {
+  background-color: #1890ff !important;
+  color: white !important;
+  cursor: not-allowed !important;
+  opacity: 0.8 !important;
+}
+
+.ant-picker-calendar-date.ant-picker-calendar-date-disabled .ant-picker-calendar-date-value {
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.ant-picker-calendar-date.ant-picker-calendar-date-disabled:hover {
+  background-color: #1890ff !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Стили для числа дня в календаре */
+.ant-picker-calendar-date {
+  position: relative;
+}
+
+.ant-picker-calendar-date-content {
+  height: 100%;
+}
+
+/* Переопределение стилей для числа дня */
+.deadline-cell .ant-picker-calendar-date-value {
+  color: white !important;
+  font-weight: bold !important;
+  font-size: 24px !important;
+}
+
+.event-cell .ant-picker-calendar-date-value {
+  color: white !important;
+  font-weight: bold !important;
+  font-size: 24px !important;
+}
+
+/* Дополнительные стили для ячеек с событиями */
+.ant-picker-calendar-date .calendar-cell.deadline-cell {
+  background-color: #ff4d4f !important;
+}
+
+.ant-picker-calendar-date .calendar-cell.event-cell {
+  background-color: var(--event-color) !important;
+}
+
+/* Стили для числа дня в ячейках с событиями */
+.ant-picker-calendar-date .calendar-cell .ant-picker-calendar-date-value {
+  color: white !important;
+  font-weight: bold !important;
+  font-size: 24px !important;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Стили для событий внутри ячеек */
+.events {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.events li {
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+/* Переопределение стилей Ant Design Calendar */
+.ant-picker-calendar-date {
+  position: relative;
+}
+
+.ant-picker-calendar-date-content {
+  height: 100%;
+}
+
+/* Стили для Badge в календаре */
+.calendar-cell .ant-badge {
+  width: 100%;
+}
+
+.calendar-cell .ant-badge-status-text {
+  font-size: 10px;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+/* Фиксированные размеры календаря для всех устройств */
+
+
+
+
+/* Стили для горизонтального скролла */
+.calendar-scroll-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: scrollbar;
+}
+
+.calendar-scroll-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.calendar-scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.calendar-scroll-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.calendar-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Стили для кнопок действий */
+.action-buttons-container {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  min-width: fit-content;
+  padding: 10px 0;
+}
+
+.action-buttons-container .ant-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Медиа-запросы для мобильных устройств */
+@media (max-width: 768px) {
+  .ant-picker-calendar {
+    min-width: 800px !important;
+  }
+  
+  .ant-picker-calendar .ant-picker-calendar-date {
+    width: 100px !important;
+    min-width: 120px !important;
+  }
+  
+  /* Кнопки на мобильных устройствах */
+  .action-buttons-container {
+    gap: 12px;
+  }
+  
+  .action-buttons-container .ant-btn {
+    min-width: 180px;
+    font-size: 1.2rem !important;
+  }
+}

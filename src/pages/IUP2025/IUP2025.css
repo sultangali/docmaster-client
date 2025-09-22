@@ -1,0 +1,292 @@
+/* ИУП 2025 - Стили для чистого интерфейса */
+
+.iup-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* Карточки статистики */
+.iup-stats-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.iup-stats-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Убрано: старые стили для списка студентов (заменены на таблицу) */
+
+/* Формы этапов */
+.iup-stage-form .ant-card {
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.iup-stage-form .ant-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Прогресс индикаторы */
+.iup-progress-circle {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Темы диссертации */
+.iup-topic-cards .ant-card {
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.iup-topic-cards .ant-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Статусы */
+.iup-status-tag {
+  font-weight: 500;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+/* Правки руководителя */
+.iup-supervisor-edits {
+  background: linear-gradient(135deg, #fff7e6 0%, #fff2d9 100%);
+  border-left: 4px solid #faad14;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+/* Кнопки действий */
+.iup-actions {
+  text-align: center;
+  padding: 24px;
+  background: #fafafa;
+  border-radius: 8px;
+  margin-top: 24px;
+}
+
+.iup-actions .ant-btn {
+  margin: 0 8px;
+  min-width: 140px;
+  height: 40px;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+/* Фильтры */
+.iup-filters {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+/* История этапов */
+.iup-history .ant-timeline-item-content {
+  margin-left: 16px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .iup-container {
+    padding: 0 16px;
+  }
+  
+  .iup-topic-cards .ant-col {
+    margin-bottom: 16px;
+  }
+  
+  .iup-actions .ant-btn {
+    width: 100%;
+    margin: 8px 0;
+  }
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.iup-fade-in {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* Кастомные цвета статусов */
+.status-not-started { color: #8c8c8c; }
+.status-in-progress { color: #1890ff; }
+.status-submitted { color: #faad14; }
+.status-supervisor-review { color: #fa8c16; }
+.status-supervisor-approved { color: #52c41a; }
+.status-admin-review { color: #722ed1; }
+.status-admin-approved { color: #52c41a; }
+.status-completed { color: #389e0d; }
+.status-rejected { color: #ff4d4f; }
+
+/* Улучшенные карточки */
+.iup-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.iup-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-color: #d9d9d9;
+}
+
+/* Заголовки */
+.iup-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #262626;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.iup-section-title .anticon {
+  color: #1890ff;
+}
+
+/* Стили для таблицы студентов */
+.iup-students-table {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.iup-students-table .ant-table-thead > tr > th {
+  background: #fafafa;
+  border-bottom: 2px solid #f0f0f0;
+  font-weight: 600;
+  color: #262626;
+  padding: 12px 8px;
+}
+
+.iup-students-table .ant-table-tbody > tr > td {
+  padding: 12px 8px;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.iup-students-table .ant-table-tbody > tr:hover > td {
+  background: #f8f9ff;
+}
+
+.iup-students-table .ant-table-tbody > tr:last-child > td {
+  border-bottom: none;
+}
+
+/* Responsive для мобильных устройств */
+@media (max-width: 768px) {
+  .iup-students-table .ant-table-thead > tr > th:nth-child(2),
+  .iup-students-table .ant-table-tbody > tr > td:nth-child(2) {
+    display: none;
+  }
+  
+  .iup-students-table .ant-table-thead > tr > th:nth-child(6),
+  .iup-students-table .ant-table-tbody > tr > td:nth-child(6) {
+    display: none;
+  }
+  
+  .iup-students-table .ant-table-thead > tr > th:nth-child(7),
+  .iup-students-table .ant-table-tbody > tr > td:nth-child(7) {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .iup-students-table .ant-table-thead > tr > th:nth-child(4),
+  .iup-students-table .ant-table-tbody > tr > td:nth-child(4) {
+    display: none;
+  }
+  
+  .iup-students-table .ant-table-thead > tr > th:nth-child(5),
+  .iup-students-table .ant-table-tbody > tr > td:nth-child(5) {
+    display: none;
+  }
+}
+
+/* Стили для шаблонов заявлений */
+.application-template {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.application-template .ant-card-body {
+  padding: 0 !important;
+}
+
+.application-template .ant-card {
+  border: 2px solid #d9d9d9 !important;
+}
+
+/* Эффект печатного документа */
+.application-template::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1890ff 0%, #40a9ff 100%);
+  z-index: 1;
+}
+
+/* Стили для выделенных полей в заявлении */
+.application-template span[style*="background"] {
+  padding: 2px 6px !important;
+  border-radius: 3px !important;
+  font-weight: bold !important;
+  background-color: #fff3cd !important;
+  border: 1px solid #ffeaa7 !important;
+  color: #856404 !important;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+  .application-template {
+    margin: 10px -20px;
+    border-radius: 0 !important;
+  }
+  
+  .application-template .ant-card {
+    border-left: none !important;
+    border-right: none !important;
+  }
+}
+
+/* Печать */
+@media print {
+  .application-template {
+    border: none !important;
+    box-shadow: none !important;
+    background: white !important;
+    page-break-inside: avoid;
+  }
+  
+  .application-template .ant-card {
+    border: 1px solid #000 !important;
+  }
+  
+  .application-template span[style*="background"] {
+    background-color: transparent !important;
+    border: 1px solid #000 !important;
+    color: #000 !important;
+  }
+}
