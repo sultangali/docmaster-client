@@ -522,10 +522,10 @@ const StudentStageView = ({ iupData, onUpdate }) => {
             {currentStageData.stageType !== 'dissertation_application' && (
               <Card className="iup-actions" style={{ marginTop: 24 }}>
                 <Space size="large" direction="vertical" style={{ width: '100%' }}>
-                  <Space size="large">
+                  <Space size="middle">
                     {canEdit && (
                       <Button 
-                        size="large"
+                        size="middle"
                         icon={<SaveOutlined />}
                         onClick={handleSave}
                         loading={loading}
