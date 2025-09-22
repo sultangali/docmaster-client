@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://docmaster.digital/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://docmaster.digital/api';
 
 console.log('🔧 API Configuration:', {
   VITE_API_URL: import.meta.env.VITE_API_URL,
@@ -40,6 +40,7 @@ class ApiService {
   async request(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`;
     const config = {
+      credentials: 'include',
       headers: this.getHeaders(options.auth !== false),
       ...options,
     };
