@@ -960,7 +960,7 @@ const onLangaugeChange = value => {
                     display: 'background'
                   },
                   {
-                    start: '2025-09-24',
+                    start: '2025-09-25',
                     title: 'ИУП 2025 крайный срок',
                     display: 'list-item',
                     extendedProps: {
@@ -974,7 +974,7 @@ const onLangaugeChange = value => {
                   const m = String(arg.date.getMonth() + 1).padStart(2, '0');
                   const d = String(arg.date.getDate()).padStart(2, '0');
                   const today = new Date().toISOString().slice(0, 10);
-                  if (`${y}-${m}-${d}` === '2025-09-24') {
+                  if (`${y}-${m}-${d}` === '2025-09-25') {
                     return ['custom-red-cell', 'white-day-number'];
                   }
                   if (`${y}-${m}-${d}` === today) {
