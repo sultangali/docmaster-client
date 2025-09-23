@@ -339,35 +339,55 @@ const IUP2025 = () => {
     );
   }
 
+  // Определяем, нужно ли применить режим ПК (для магистрантов на 2 этапе)
+  const isPCMode = user.role === 'magistrants' && 
+                   iupData && 
+                   iupData.currentStage === 2 && 
+                   iupData.stages?.find(s => s.stageNumber === 2)?.stageType === 'dissertation_application';
+
   return (
-    <Layout style={{ minHeight: '100vh', background: '#f0f2f5' }}>
+    <Layout style={{ minHeight: '100vh', background: isPCMode ? '#f0f2f5' : '#f0f2f5' }} className={isPCMode ? 'iup-pc-mode' : ''}>
       <Header style={{ 
-        background: '#fff', 
+        background: isPCMode ? 'linear-gradient(135deg, #1890ff 0%, #40a9ff 100%)' : '#fff', 
         padding: '0 20px', 
-        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+        boxShadow: isPCMode ? '0 4px 16px rgba(0,0,0,0.15)' : '0 2px 8px rgba(0,0,0,0.06)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between'
       }}>
         <Space>
           <Button 
-            type="text" 
+            type={isPCMode ? 'primary' : 'text'}
             icon={<ArrowLeftOutlined />} 
             onClick={() => navigate('/profile')}
             size="large"
+            style={isPCMode ? { 
+              background: 'rgba(255,255,255,0.2)', 
+              border: '1px solid rgba(255,255,255,0.3)',
+              color: 'white'
+            } : {}}
           >
             Назад в профиль
           </Button>
-          <Title level={3} style={{ margin: 0, color: '#1890ff' }}>
+          <Title level={3} style={{ margin: 0, color: isPCMode ? 'white' : '#1890ff' }}>
             ИУП 2025
           </Title>
         </Space>
         {user.role === 'magistrants' && iupData && (
-          <Badge count={iupData.currentStage} showZero color="#1890ff" />
+          <Badge 
+            count={iupData.currentStage} 
+            showZero 
+            color={isPCMode ? '#52c41a' : '#1890ff'}
+            style={isPCMode ? { 
+              background: 'rgba(255,255,255,0.2)', 
+              color: 'white',
+              border: '1px solid rgba(255,255,255,0.3)'
+            } : {}}
+          />
         )}
       </Header>
       
-      <Content style={{ padding: '20px' }}>
+      <Content style={{ padding: isPCMode ? '0' : '20px', background: isPCMode ? '#f0f2f5' : 'transparent' }}>
         {user.role === 'magistrants' ? (
           // Вид для магистранта
           error ? (

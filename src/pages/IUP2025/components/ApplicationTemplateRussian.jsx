@@ -55,12 +55,14 @@ const ApplicationTemplateRussian = ({ studentData, supervisorData, dissertationT
     <Card 
       className="application-template"
       style={{ 
-        maxWidth: 800, 
+        width: 800,
+        minWidth: 800, 
         height: 1024,
         margin: '0 auto',
         background: '#fff',
         border: '2px solid #d9d9d9',
-        fontFamily: 'Times New Roman, serif'
+        fontFamily: 'Times New Roman, serif',
+        flexShrink: 0
       }}
     >
       <div style={{ 

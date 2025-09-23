@@ -17,7 +17,8 @@ import {
   Progress,
   Tag,
   Descriptions,
-  Steps
+  Steps,
+  Tooltip
 } from 'antd';
 import {
   BookOutlined,
@@ -27,7 +28,9 @@ import {
   SendOutlined,
   SaveOutlined,
   EditOutlined,
-  InfoCircleOutlined
+  InfoCircleOutlined,
+  LeftOutlined,
+  RightOutlined
 } from '@ant-design/icons';
 import api from '../../../services/api';
 import ApplicationTemplateKazakh from './ApplicationTemplateKazakh';
@@ -42,6 +45,8 @@ const StudentStageView = ({ iupData, onUpdate }) => {
   const [loading, setLoading] = useState(false);
   const [currentStageData, setCurrentStageData] = useState(null);
   const [submitModalVisible, setSubmitModalVisible] = useState(false);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
   const onUpdateRef = useRef(onUpdate);
 
   console.log(iupData?.metadata);
@@ -72,6 +77,63 @@ const StudentStageView = ({ iupData, onUpdate }) => {
   useEffect(() => {
     onUpdateRef.current = onUpdate;
   }, [onUpdate]);
+
+  // Функции для управления скроллом
+  const scrollLeft = () => {
+    const scrollContainer = document.getElementById('application-scroll-container');
+    if (scrollContainer) {
+      scrollContainer.scrollBy({ left: -200, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    const scrollContainer = document.getElementById('application-scroll-container');
+    if (scrollContainer) {
+      scrollContainer.scrollBy({ left: 200, behavior: 'smooth' });
+    }
+  };
+
+  // Эффект для управления индикаторами горизонтального скролла
+  useEffect(() => {
+    const scrollContainer = document.getElementById('application-scroll-container');
+    if (!scrollContainer) return;
+
+    const updateScrollIndicators = () => {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainer;
+      const isScrollable = scrollWidth > clientWidth;
+      
+      // Обновляем состояние кнопок
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
+      
+      // Добавляем/убираем класс scrollable
+      if (isScrollable) {
+        scrollContainer.classList.add('scrollable');
+      } else {
+        scrollContainer.classList.remove('scrollable');
+      }
+    };
+
+    const handleScroll = () => {
+      updateScrollIndicators();
+      scrollContainer.classList.add('scrolling');
+      setTimeout(() => {
+        scrollContainer.classList.remove('scrolling');
+      }, 600);
+    };
+
+    // Проверяем при загрузке
+    updateScrollIndicators();
+    
+    // Проверяем при изменении размера окна
+    window.addEventListener('resize', updateScrollIndicators);
+    scrollContainer.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('resize', updateScrollIndicators);
+      scrollContainer.removeEventListener('scroll', handleScroll);
+    };
+  }, [currentStageData]);
 
   // Автоматическое обновление статуса каждые 30 секунд - ОТКЛЮЧЕНО для предотвращения циклов
   // useEffect(() => {
@@ -213,8 +275,11 @@ const StudentStageView = ({ iupData, onUpdate }) => {
     (hasStudentData && ['not_started', 'in_progress', 'rejected'].includes(currentStageData.status))
   );
 
+  // Определяем, нужно ли применить режим ПК (для 2 этапа - заявление на тему диссертации)
+  // const isPCMode = currentStageData?.stageType === 'dissertation_application';
+
   return (
-    <div className="iup-container">
+    <div className={`iup-container `}>
       {/* Общий прогресс - упрощенный */}
       <Card className="iup-card" style={{ marginBottom: 24 }}>
         <Row gutter={[24, 24]} align="middle">
@@ -288,12 +353,22 @@ const StudentStageView = ({ iupData, onUpdate }) => {
           }
           extra={
             canEdit && (
-              <Text type="secondary">
+              <Text type="primary">
                 <InfoCircleOutlined /> Заполните поля и сохраните изменения
               </Text>
             )
           }
         >
+          {/* {isPCMode && (
+            <Alert 
+              message="🖥️ Режим ПК активирован"
+              description="Вы находитесь в специальном режиме для работы с заявлением на тему диссертации. Интерфейс оптимизирован для удобной работы на компьютере."
+              type="success" 
+              showIcon 
+              style={{ marginBottom: 24 }}
+            />
+          )} */}
+
           {currentStageData.description && (
             <Alert 
               message="Описание этапа"
@@ -320,62 +395,89 @@ const StudentStageView = ({ iupData, onUpdate }) => {
                   description={
                     <div>
                       <p><strong>Заявление нужно написать от руки на языке обучения!</strong></p>
-                      <ul>
-                        <li>Каждый магистрант пишет заявление от руки на А4 листе</li>
-                        <li>Язык заявления должен соответствовать вашему языку обучения</li>
-                        <li>Посмотрите на образец ниже, чтобы понять что и как написать</li>
-                      </ul>
                       
+                        Каждый магистрант пишет заявление от руки на А4 листе
+                        Язык заявления должен соответствовать вашему языку обучения
+                        Посмотрите на образец ниже, чтобы понять что и как написать
+                     
+                      <br />
                       <p><strong>Порядок получения подписей (2 корпус):</strong></p>
-                      <ol style={{ marginLeft: '20px' }}>
+                      
                         <li><strong>Подпись научного руководителя</strong> - получите у своего руководителя</li>
                         <li><strong>Подпись заведующей кафедры</strong> - Попова Надежда Викторовна:
-                          <ul style={{ marginTop: '5px', marginLeft: '15px' }}>
+                          <ul style={{ marginTop: '5px', marginLeft: '-24px' }}>
                             <li>📍 Кабинет 318 (2 корпус)</li>
                             <li>Если её нет, спросите в 321 кабинете где её найти</li>
                           </ul>
                         </li>
                         <li><strong>Подпись декана</strong> - Танин Алибек Орланович:
-                          <ul style={{ marginTop: '5px', marginLeft: '15px' }}>
+                          <ul style={{ marginTop: '5px', marginLeft: '-24px' }}>
                             <li>📍 Кабинет 408 (2 корпус, 4 этаж)</li>
                           </ul>
                         </li>
                         <li><strong>Сдача готового заявления:</strong>
-                          <ul style={{ marginTop: '5px', marginLeft: '15px' }}>
+                          <ul style={{ marginTop: '5px',marginLeft: '-24px' }}>
                             <li>📍 Кабинет 321 (2 корпус)</li>
                             <li>Заявление должно быть с тремя подписями!</li>
                           </ul>
                         </li>
-                      </ol>
+                      
                     </div>
                   }
                   type="warning"
-                  showIcon
+                 
                   style={{ marginBottom: 24 }}
                 />
                 
-                {/* Показываем образец на соответствующем языке */}
-                {iupData.metadata?.language === 'Қазақша' ? (
-                  <ApplicationTemplateKazakh 
-                    studentData={iupData.student}
-                    supervisorData={iupData.supervisor}
-                    dissertationTopic={
-                      // Берем тему из первого этапа, если она там есть
-                      iupData.stages?.find(s => s.stageNumber === 1)?.studentData?.dissertationTopic ||
-                      currentStageData.studentData?.dissertationTopic
-                    }
-                  />
-                ) : (
-                  <ApplicationTemplateRussian 
-                    studentData={iupData.student}
-                    supervisorData={iupData.supervisor}
-                    dissertationTopic={
-                      // Берем тему из первого этапа, если она там есть
-                      iupData.stages?.find(s => s.stageNumber === 1)?.studentData?.dissertationTopic ||
-                      currentStageData.studentData?.dissertationTopic
-                    }
-                  />
-                )}
+                {/* Подсказка о горизонтальном скролле */}
+                <div className="application-scroll-hint">
+                  Используйте горизонтальный скролл или кнопки для просмотра полного образца заявления
+                </div>
+                
+                {/* Кнопки управления скроллом */}
+                <div className="application-scroll-controls">
+                  <Tooltip title="Прокрутить влево">
+                    <Button 
+                      icon={<LeftOutlined />} 
+                      onClick={scrollLeft}
+                      disabled={!canScrollLeft}
+                      size="large"
+                    />
+                  </Tooltip>
+                  <Tooltip title="Прокрутить вправо">
+                    <Button 
+                      icon={<RightOutlined />} 
+                      onClick={scrollRight}
+                      disabled={!canScrollRight}
+                      size="large"
+                    />
+                  </Tooltip>
+                </div>
+                
+                {/* Контейнер с горизонтальным скроллом для образца заявления */}
+                <div className="application-scroll-container" id="application-scroll-container">
+                  {iupData.metadata?.language === 'Қазақша' ? (
+                    <ApplicationTemplateKazakh 
+                      studentData={iupData.student}
+                      supervisorData={iupData.supervisor}
+                      dissertationTopic={
+                        // Берем тему из первого этапа, если она там есть
+                        iupData.stages?.find(s => s.stageNumber === 1)?.studentData?.dissertationTopic ||
+                        currentStageData.studentData?.dissertationTopic
+                      }
+                    />
+                  ) : (
+                    <ApplicationTemplateRussian 
+                      studentData={iupData.student}
+                      supervisorData={iupData.supervisor}
+                      dissertationTopic={
+                        // Берем тему из первого этапа, если она там есть
+                        iupData.stages?.find(s => s.stageNumber === 1)?.studentData?.dissertationTopic ||
+                        currentStageData.studentData?.dissertationTopic
+                      }
+                    />
+                  )}
+                </div>
               </div>
             ) : currentStageData.stageType === 'dissertation_topic' ? (
               // Форма для ввода темы диссертации на трех языках
